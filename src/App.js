@@ -1,11 +1,16 @@
 import React from 'react';
+import Navbar from "./components/navbar";
+import Routes from "./routes"
 
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <>
+      <div className="container">
+        <Navbar />
+        <Routes />
+      </div>
+    </>
   );
 }
 
