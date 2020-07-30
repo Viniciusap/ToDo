@@ -23,6 +23,17 @@ export default class AddProduct extends React.Component {
         console.log(this.state)
     }
 
+    Clear = (e) =>{
+        console.log("limpar")
+        this.setState({
+            name: '',
+            sku: '',
+            description: '',
+            price: 0,
+            supplier: ''
+           })
+     }
+
     render(){
         return(
             <div className="card">
@@ -97,7 +108,7 @@ export default class AddProduct extends React.Component {
                             <button className="btn btn-success" onClick={this.onSubmit}>Salvar</button>
                         </div>
                         <div className="col-md-1">
-                            <button className="btn btn-warning">Limpar</button>
+                            <button className="btn btn-warning" onClick={this.Clear}>Limpar</button>
                         </div>
                     </div>
 
