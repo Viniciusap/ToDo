@@ -24,7 +24,7 @@ function Navbar() {
                         <a className="nav-link" href="#/add-products">Cadastro</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Consulta</a>
+                        <a className="nav-link" href="#/BrowseProducts">Consulta Produtos</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="#/add-todo">ToDo</a>
