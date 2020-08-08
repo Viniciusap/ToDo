@@ -8,8 +8,14 @@ export default class BrowseProducts extends React.Component {
         products: []
     }
 
+    constructor(){
+        super()
+        this.service = new ProductService();
+    }
+
     componentWillMount(){
-        
+        const products = this.service.getProducts();
+        this.setState({products})
     }
 
     render() {
@@ -30,13 +36,13 @@ export default class BrowseProducts extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.products.map(products => {
+                            this.state.products.map(product => {
                                 return (
                                     <tr>
-                                        <th>{products.nome}</th>
-                                        <th>{products.sku}</th>
-                                        <th>{products.price}</th>
-                                        <th>{products.supplier}</th>
+                                        <th>{product.name}</th>
+                                        <th>{product.sku}</th>
+                                        <th>{product.price}</th>
+                                        <th>{product.supplier}</th>
                                         <th></th>
                                     </tr>
                                 )

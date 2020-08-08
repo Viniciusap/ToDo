@@ -28,6 +28,12 @@ export default class ProductService{
             throw new ErrorValidation(errors)
         }
     }
+
+    getProducts = () => {
+        const products = localStorage.getItem(Products)
+        return JSON.parse(products)
+    }
+
     save = (product) => {
 
         this.validation(product)
