@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-import 'bootswatch/dist/cerulean/bootstrap.min.css'
+import 'bootswatch/dist/flatly/bootstrap.min.css'
 
 ReactDOM.render(
   <React.StrictMode>

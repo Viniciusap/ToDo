@@ -1,6 +1,7 @@
 import React from 'react'
 
 import ProductService from '../../app/productService'
+import { withRouter } from 'react-router-dom'
 
 const initialState = {
     name: '',
@@ -12,7 +13,7 @@ const initialState = {
     errors: []
 }
 
-export default class AddProduct extends React.Component {
+class AddProduct extends React.Component {
 
     state = initialState
 
@@ -53,6 +54,19 @@ export default class AddProduct extends React.Component {
 
     clear = () => {
         this.setState(initialState)
+    }
+
+    componentDidMount(){
+        const sku = this.props.match.params.sku
+
+        if(sku){
+            const result = this.service.getProducts().filter(product => product.sku === sku)
+
+            if(result.length === 1){
+                const findProduct = result[0]
+                this.setState({...findProduct})
+            }
+        }
     }
 
     render() {
@@ -127,7 +141,7 @@ export default class AddProduct extends React.Component {
                         {/* Linha */}
                         <div className="row">
                             <div className="col-md-1">
-                                <button className="btn btn-success" onClick={this.onSubmit}>Salvar</button>
+                                <button className="btn btn-primary" onClick={this.onSubmit}>Salvar</button>
                             </div>
                             <div className="col-md-1">
                                 <button className="btn btn-warning" onClick={this.clear}>Limpar</button>
@@ -158,3 +172,5 @@ export default class AddProduct extends React.Component {
     }
 
 }
+
+export default withRouter(AddProduct);

@@ -1,8 +1,10 @@
 import React from 'react'
-
 import ProductService from '../../app/productService'
 
-export default class BrowseProducts extends React.Component {
+import { withRouter } from 'react-router-dom'
+
+
+class BrowseProducts extends React.Component {
 
     state = {
         products: []
@@ -16,6 +18,10 @@ export default class BrowseProducts extends React.Component {
     componentWillMount(){
         const products = this.service.getProducts();
         this.setState({products})
+    }
+
+    prepEdit = (sku) => {
+        this.props.history.push(`/add-products/${sku}`)
     }
 
     render() {
@@ -36,14 +42,17 @@ export default class BrowseProducts extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.products.map(product => {
+                            this.state.products.map((product, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={index}>
                                         <th>{product.name}</th>
                                         <th>{product.sku}</th>
                                         <th>{product.price}</th>
                                         <th>{product.supplier}</th>
-                                        <th></th>
+                                        <th>
+                                            <button onClick={ () => this.prepEdit(product.sku)} className="btn btn-primary">Editar</button>
+                                            <button className="btn btn-danger">Apagar</button>
+                                        </th>
                                     </tr>
                                 )
                             })
@@ -54,3 +63,5 @@ export default class BrowseProducts extends React.Component {
         )
     }
 }
+
+export default withRouter(BrowseProducts)
