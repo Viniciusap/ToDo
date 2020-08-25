@@ -31,7 +31,30 @@ export default class ProductService{
 
     getProducts = () => {
         const products = localStorage.getItem(Products)
+        if(!products){
+            return [];
+        }
         return JSON.parse(products)
+    }
+
+    getIndex = (sku) => {
+        let index = null;
+        this.getProducts().forEach( (product, i) => {
+            if(product.sku === sku){
+                index = i;
+            }
+        })
+        return index;
+    }
+
+    delete = (sku) => {
+        const index = this.getIndex(sku);
+        if(index !== null){
+            const products = this.getProducts()
+            products.splice(index, 1)
+            localStorage.setItem(Products, JSON.stringify(products))
+            return products
+        }        
     }
 
     save = (product) => {
@@ -46,9 +69,13 @@ export default class ProductService{
         else{
             products = JSON.parse(products)
         }
-
-        products.push(product);
-
+        const index = this.getIndex(product.sku)
+        if(index===null){
+            products.push(product);
+        } 
+        else{
+            products[index]= product;
+        }
         localStorage.setItem(Products, JSON.stringify(products))
     }
 }

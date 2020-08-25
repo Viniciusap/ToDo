@@ -24,6 +24,11 @@ class BrowseProducts extends React.Component {
         this.props.history.push(`/add-products/${sku}`)
     }
 
+    delete = (sku) => {
+        const products = this.service.delete(sku);
+        this.setState({products})
+    }
+
     render() {
         return (
             <div className="card">
@@ -41,8 +46,7 @@ class BrowseProducts extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            this.state.products.map((product, index) => {
+                        { this.state.products.map((product, index) => {
                                 return (
                                     <tr key={index}>
                                         <th>{product.name}</th>
@@ -51,7 +55,7 @@ class BrowseProducts extends React.Component {
                                         <th>{product.supplier}</th>
                                         <th>
                                             <button onClick={ () => this.prepEdit(product.sku)} className="btn btn-primary">Editar</button>
-                                            <button className="btn btn-danger">Apagar</button>
+                                            <button onClick={ () => this.delete(product.sku) } className="btn btn-danger">Apagar</button>
                                         </th>
                                     </tr>
                                 )
