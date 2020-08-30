@@ -1,6 +1,6 @@
 import React from 'react'
 import toDoService from '../../app/todoService'
-
+import Card from '../../components/card'
 import { withRouter } from 'react-router-dom'
 
 class BrowseToDo extends React.Component {
@@ -31,10 +31,7 @@ class BrowseToDo extends React.Component {
 
     render() {
         return (
-            <div className="card">
-                <div className="card-header">
-                    Consulta de ToDo's
-                </div>
+            <Card header="Consulta de ToDo's">
                 <table className="table table-hover">
                     <thead>
                         <tr>
@@ -64,7 +61,7 @@ class BrowseToDo extends React.Component {
                         }
                     </tbody>
                 </table>
-            </div>
+            </Card>
         )
 
     }

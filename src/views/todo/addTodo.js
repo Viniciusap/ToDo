@@ -1,6 +1,7 @@
 import React from 'react'
 import DateTimePicker from 'react-datetime-picker';
 
+import Card from '../../components/card'
 import toDoService from '../../app/todoService'
 import { withRouter } from 'react-router-dom'
 
@@ -50,16 +51,16 @@ class AddTodo extends React.Component {
             reminder: this.state.reminder
         }
 
-        try{
+        try {
             this.service.save(toDo);
             this.clear();
             this.setState({ successAdd: true })
         }
-        catch (error){
+        catch (error) {
             const errors = error.errors
-            this.setState({errors:errors})
+            this.setState({ errors: errors })
         }
-        
+
 
     }
 
@@ -67,14 +68,14 @@ class AddTodo extends React.Component {
         this.setState(initialState)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const id = this.props.match.params.id
-        
-        if(id){
+
+        if (id) {
             const result = this.service.getByIndex(id)
             console.log(result)
-            if(result.id != ""){
-                this.setState({...result, update: true})
+            if (result.id != "") {
+                this.setState({ ...result, update: true })
             }
         }
 
@@ -82,105 +83,95 @@ class AddTodo extends React.Component {
 
 
     render() {
-
-
         return (
-            <div className="card">
-                <div className="card-header">
-                    Inclusão de Atividades
-                </div>
-                <div className="card-body">
-                    {
-                        this.state.successAdd &&
-                        <div className="alert alert-dismissible alert-success">
-                                <button type="button" className="close" data-dismiss="alert">&times;</button>
-                                <strong>Sua tarefa foi salva com sucesso</strong>
+            <Card header="Inclusão de Atividades">
+                {
+                    this.state.successAdd &&
+                    <div className="alert alert-dismissible alert-success">
+                        <button type="button" className="close" data-dismiss="alert">&times;</button>
+                        <strong>Sua tarefa foi salva com sucesso</strong>
+                    </div>
+                }
+                {
+                    this.state.errors && this.state.errors.length > 0 &&
+                    this.state.errors.map(msg =>
+                        <div key={msg} className="alert alert-dismissible alert-danger">
+                            <button type="button" className="close" data-dismiss="alert">&times;</button>
+                            <strong>{msg}</strong>
                         </div>
-                    }
-                    {
-                        this.state.errors && this.state.errors.length > 0 &&
-                        this.state.errors.map(msg =>
-                            <div key={msg} className="alert alert-dismissible alert-danger">
-                                <button type="button" className="close" data-dismiss="alert">&times;</button>
-                                <strong>{msg}</strong>
+                    )
+                }
+                {/* Linha */}
+                <form onSubmit={this.OnSubmit}>
+
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Nome: *</label>
+                                <textarea className="form-control"
+                                    name="name"
+                                    value={this.state.name}
+                                    onChange={this.onChange} />
                             </div>
-                        )
-                    }
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Descrição: </label>
+                                <textarea className="form-control"
+                                    name="description"
+                                    value={this.state.description}
+                                    onChange={this.onChange} />
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Linha */}
-                    <form onSubmit={this.OnSubmit}>
-
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Nome: *</label>
-                                    <textarea className="form-control"
-                                        name="name"
-                                        value={this.state.name}
-                                        onChange={this.onChange} />
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Descrição: </label>
-                                    <textarea className="form-control"
-                                        name="description"
-                                        value={this.state.description}
-                                        onChange={this.onChange} />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Linha */}
-                        <div className="row">
-                            <div className="col-md-3">
-                                <div className="form-group">
-                                    <label>
-                                        Data: &nbsp;
+                    <div className="row">
+                        <div className="col-md-3">
+                            <div className="form-group">
+                                <label>
+                                    Data: &nbsp;
                                     </label>
-                                    <DateTimePicker
-                                        onChange={this.onChange}
-                                        value={this.state.date}
-                                        className="form-control"
-                                        name="date"
-                                        onChange={this.onChageDate} />
-                                </div>
+                                <DateTimePicker
+                                    onChange={this.onChange}
+                                    value={this.state.date}
+                                    className="form-control"
+                                    name="date"
+                                    onChange={this.onChageDate} />
                             </div>
-                            <div className="col-md-3">
-                                <div className="form-group">
-                                    <label>
-                                        Lembrete: &nbsp;
+                        </div>
+                        <div className="col-md-3">
+                            <div className="form-group">
+                                <label>
+                                    Lembrete: &nbsp;
                                     </label>
-                                    <DateTimePicker
-                                        onChange={this.onChange}
-                                        value={this.state.reminder}
-                                        className="form-control"
-                                        name="reminder"
-                                        onChange={this.onChageDates}
-                                    />
-                                </div>
+                                <DateTimePicker
+                                    onChange={this.onChange}
+                                    value={this.state.reminder}
+                                    className="form-control"
+                                    name="reminder"
+                                    onChange={this.onChageDates}
+                                />
                             </div>
                         </div>
+                    </div>
 
-                        {/* Linha */}
-                        <div className="row">
-                            <div className="col-md-3">
-                                <button type="button"
-                                    className="btn btn-primary"
-                                    type="submit">
-                                    {this.state.update ? 'Atualizar' : 'Salvar'}
+                    {/* Linha */}
+                    <div className="row">
+                        <div className="col-md-3">
+                            <button type="button"
+                                className="btn btn-primary"
+                                type="submit">
+                                {this.state.update ? 'Atualizar' : 'Salvar'}
+                            </button>
+                            <button type="button"
+                                className="btn btn-warning"
+                                onClick={this.clear}>Limpar
                                 </button>
-                                <button type="button"
-                                    className="btn btn-warning"
-                                    onClick={this.clear}>Limpar
-                                </button>
-                            </div>
                         </div>
-                    
-                    </form>
-                </div>
-            </div>
-
-
+                    </div>
+                </form>
+            </Card>
         )
     }
 }
