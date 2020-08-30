@@ -24,6 +24,11 @@ class BrowseToDo extends React.Component {
         this.props.history.push(`/add-todo/${id}`)
     }
 
+    delete = (id) => {
+        const toDos = this.service.delete(id);
+        this.setState({toDos})
+    }
+
     render() {
         return (
             <div className="card">
@@ -51,7 +56,7 @@ class BrowseToDo extends React.Component {
                                         <th>{todo.reminder}</th>
                                         <th>
                                             <button onClick={ () => this.prepEdit(todo.id) } className="btn btn-primary">Editar &nbsp;</button>
-                                            <button onClick={ () => this.prepEdit(todo.id) } className="btn btn-danger">Apagar</button>
+                                            <button onClick={ () => this.delete(todo.id) } className="btn btn-danger">Apagar</button>
                                         </th>
                                     </tr>
                                 )

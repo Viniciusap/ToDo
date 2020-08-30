@@ -41,7 +41,7 @@ export default class toDoService{
     getIndex = (id) => {
         let index = null;
         this.getToDos().forEach( (toDo, i) => {
-            if(toDo.id === id){
+            if(toDo.id == id){
                 index = i;
             }
         })
@@ -56,6 +56,16 @@ export default class toDoService{
             }
         })
         return todoa;
+    }
+
+    delete = (id) => {
+        const index = this.getIndex(id);
+        if(index !== null){
+            const toDos = this.getToDos()
+            toDos.splice(index, 1)
+            localStorage.setItem(ToDos, JSON.stringify(toDos) )
+            return toDos
+        }
     }
 
     save = (toDo) => {
