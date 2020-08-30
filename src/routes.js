@@ -12,7 +12,7 @@ export default () => {
     return(
             <Switch>
                 <Route exact path="/add-products/:sku?" component={AddProduct} />
-                <Route exact path="/add-todo" component={AddTodo} />
+                <Route exact path="/add-todo/:id?" component={AddTodo} />
                 <Route exact path="/BrowseProducts" component={BrowseProducts} />
                 <Route exact path="/BrowseToDo" component={BrowseToDo} />
                 <Route exact path="/" component={Home} />

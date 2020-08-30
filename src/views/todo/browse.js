@@ -1,8 +1,9 @@
 import React from 'react'
-
 import toDoService from '../../app/todoService'
 
-export default class BrowseToDo extends React.Component {
+import { withRouter } from 'react-router-dom'
+
+class BrowseToDo extends React.Component {
 
     state = {
         toDos: []
@@ -16,7 +17,11 @@ export default class BrowseToDo extends React.Component {
     componentWillMount() {
         const toDos = this.service.getToDos();
         this.setState({toDos})
-        console.log(toDos);
+        // console.log(toDos);
+    }
+
+    prepEdit = (id) => {
+        this.props.history.push(`/add-todo/${id}`)
     }
 
     render() {
@@ -44,7 +49,10 @@ export default class BrowseToDo extends React.Component {
                                         <th>{todo.description}</th>
                                         <th>{todo.date}</th>
                                         <th>{todo.reminder}</th>
-                                        <th></th>
+                                        <th>
+                                            <button onClick={ () => this.prepEdit(todo.id) } className="btn btn-primary">Editar &nbsp;</button>
+                                            <button onClick={ () => this.prepEdit(todo.id) } className="btn btn-danger">Apagar</button>
+                                        </th>
                                     </tr>
                                 )
                             })
@@ -56,3 +64,5 @@ export default class BrowseToDo extends React.Component {
 
     }
 }
+
+export default withRouter(BrowseToDo)

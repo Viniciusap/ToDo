@@ -82,6 +82,22 @@ class AddProduct extends React.Component {
                     </div>
 
                     <div className="card-body">
+                        
+                        {this.state.successAdd &&
+                            <div className="alert alert-dismissible alert-success">
+                                <button type="button" className="close" data-dismiss="alert">&times;</button>
+                                <strong>Seu produto foi salvo com sucesso</strong>
+                            </div>
+                        }
+                        {this.state.errors && this.state.errors.length > 0 &&
+                            this.state.errors.map(msg =>
+                                <div key={msg} className="alert alert-dismissible alert-danger">
+                                    <button type="button" className="close" data-dismiss="alert">&times;</button>
+                                    <strong>{msg}</strong>
+                                </div>
+                            )
+
+                        }
                         {/* Linha */}
                         <form onSubmit={this.onSubmit}>
                             <div className="row">
@@ -156,24 +172,6 @@ class AddProduct extends React.Component {
                                     <button className="btn btn-warning" onClick={this.clear}>Limpar</button>
                                 </div>
                             </div>
-
-
-
-                            {this.state.successAdd &&
-                                <div className="alert alert-dismissible alert-success">
-                                    <button type="button" className="close" data-dismiss="alert">&times;</button>
-                                    <strong>Seu produto foi salvo com sucesso</strong>
-                                </div>
-                            }
-                            {this.state.errors && this.state.errors.length > 0 &&
-                                this.state.errors.map(msg =>
-                                    <div key={msg} className="alert alert-dismissible alert-danger">
-                                        <button type="button" className="close" data-dismiss="alert">&times;</button>
-                                        <strong>{msg}</strong>
-                                    </div>
-                                )
-
-                            }
                         </form>
                     </div>
                 </div>

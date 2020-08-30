@@ -2,15 +2,19 @@ import React from 'react'
 import DateTimePicker from 'react-datetime-picker';
 
 import toDoService from '../../app/todoService'
+import { withRouter } from 'react-router-dom'
 
 const initialState = {
+    id: '',
     name: '',
     description: '',
     date: new Date(),
     reminder: new Date(),
+    successAdd: false,
+    errors: [],
 }
 
-export default class AddTodo extends React.Component {
+class AddTodo extends React.Component {
     state = initialState
 
     constructor() {
@@ -45,15 +49,34 @@ export default class AddTodo extends React.Component {
             reminder: this.state.reminder
         }
 
-        console.log(toDo);
-
-        this.service.save(toDo);
-        this.clear();
+        try{
+            this.service.save(toDo);
+            this.clear();
+            this.setState({ successAdd: true })
+        }
+        catch (error){
+            const errors = error.errors
+            this.setState({errors:errors})
+        }
+        
 
     }
 
     clear = () => {
         this.setState(initialState)
+    }
+
+    componentDidMount(){
+        const id = this.props.match.params.id
+        
+        if(id){
+            const result = this.service.getByIndex(id)
+            console.log(result)
+            if(result.id != ""){
+                this.setState({...result})
+            }
+        }
+
     }
 
 
@@ -66,6 +89,22 @@ export default class AddTodo extends React.Component {
                     Inclusão de Atividades
                 </div>
                 <div className="card-body">
+                    {
+                        this.state.successAdd &&
+                        <div className="alert alert-dismissible alert-success">
+                                <button type="button" className="close" data-dismiss="alert">&times;</button>
+                                <strong>Sua tarefa foi salva com sucesso</strong>
+                        </div>
+                    }
+                    {
+                        this.state.errors && this.state.errors.length > 0 &&
+                        this.state.errors.map(msg =>
+                            <div key={msg} className="alert alert-dismissible alert-danger">
+                                <button type="button" className="close" data-dismiss="alert">&times;</button>
+                                <strong>{msg}</strong>
+                            </div>
+                        )
+                    }
                     {/* Linha */}
                     <div className="row">
                         <div className="col-md-6">
@@ -73,6 +112,7 @@ export default class AddTodo extends React.Component {
                                 <label>Nome: *</label>
                                 <textarea className="form-control"
                                     name="name"
+                                    value={this.state.name}
                                     onChange={this.onChange} />
                             </div>
                         </div>
@@ -81,6 +121,7 @@ export default class AddTodo extends React.Component {
                                 <label>Descrição: </label>
                                 <textarea className="form-control"
                                     name="description"
+                                    value={this.state.description}
                                     onChange={this.onChange} />
                             </div>
                         </div>
@@ -135,3 +176,4 @@ export default class AddTodo extends React.Component {
         )
     }
 }
+export default withRouter(AddTodo)
