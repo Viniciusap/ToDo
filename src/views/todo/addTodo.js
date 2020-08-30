@@ -12,6 +12,7 @@ const initialState = {
     reminder: new Date(),
     successAdd: false,
     errors: [],
+    update: false
 }
 
 class AddTodo extends React.Component {
@@ -73,7 +74,7 @@ class AddTodo extends React.Component {
             const result = this.service.getByIndex(id)
             console.log(result)
             if(result.id != ""){
-                this.setState({...result})
+                this.setState({...result, update: true})
             }
         }
 
@@ -106,69 +107,76 @@ class AddTodo extends React.Component {
                         )
                     }
                     {/* Linha */}
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="form-group">
-                                <label>Nome: *</label>
-                                <textarea className="form-control"
-                                    name="name"
-                                    value={this.state.name}
-                                    onChange={this.onChange} />
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="form-group">
-                                <label>Descrição: </label>
-                                <textarea className="form-control"
-                                    name="description"
-                                    value={this.state.description}
-                                    onChange={this.onChange} />
-                            </div>
-                        </div>
-                    </div>
+                    <form onSubmit={this.OnSubmit}>
 
-                    {/* Linha */}
-                    <div className="row">
-                        <div className="col-md-3">
-                            <div className="form-group">
-                                <label>
-                                    Data: &nbsp;
-                                </label>
-                                <DateTimePicker
-                                    onChange={this.onChange}
-                                    value={this.state.date}
-                                    className="form-control"
-                                    name="date"
-                                    onChange={this.onChageDate} />
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label>Nome: *</label>
+                                    <textarea className="form-control"
+                                        name="name"
+                                        value={this.state.name}
+                                        onChange={this.onChange} />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label>Descrição: </label>
+                                    <textarea className="form-control"
+                                        name="description"
+                                        value={this.state.description}
+                                        onChange={this.onChange} />
+                                </div>
                             </div>
                         </div>
-                        <div className="col-md-3">
-                            <div className="form-group">
-                                <label>
-                                    Lembrete: &nbsp;
-                                </label>
-                                <DateTimePicker
-                                    onChange={this.onChange}
-                                    value={this.state.reminder}
-                                    className="form-control"
-                                    name="reminder"
-                                    onChange={this.onChageDates}
-                                />
+
+                        {/* Linha */}
+                        <div className="row">
+                            <div className="col-md-3">
+                                <div className="form-group">
+                                    <label>
+                                        Data: &nbsp;
+                                    </label>
+                                    <DateTimePicker
+                                        onChange={this.onChange}
+                                        value={this.state.date}
+                                        className="form-control"
+                                        name="date"
+                                        onChange={this.onChageDate} />
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="form-group">
+                                    <label>
+                                        Lembrete: &nbsp;
+                                    </label>
+                                    <DateTimePicker
+                                        onChange={this.onChange}
+                                        value={this.state.reminder}
+                                        className="form-control"
+                                        name="reminder"
+                                        onChange={this.onChageDates}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Linha */}
-                    <div className="row">
-                        <div className="col-md-3">
-                            <button type="button"
-                                className="btn btn-primary"
-                                onClick={this.OnSubmit}>
-                                Salvar
-                            </button>
+                        {/* Linha */}
+                        <div className="row">
+                            <div className="col-md-3">
+                                <button type="button"
+                                    className="btn btn-primary"
+                                    type="submit">
+                                    {this.state.update ? 'Atualizar' : 'Salvar'}
+                                </button>
+                                <button type="button"
+                                    className="btn btn-warning"
+                                    onClick={this.clear}>Limpar
+                                </button>
+                            </div>
                         </div>
-                    </div>
-
+                    
+                    </form>
                 </div>
             </div>
 
